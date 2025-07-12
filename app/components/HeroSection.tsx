@@ -4,13 +4,17 @@ import { FullLogo, IconLogo } from "./Logo";
 interface HeroSectionProps extends React.HTMLAttributes<HTMLDivElement> {
   scrollToContact?: () => void;
   scrollToServices?: () => void;
+  id?: string;
 }
 
 const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
-  ({ scrollToContact, scrollToServices, ...props }, ref) => (
-<section ref={ref} 
-{...props}
-className="md:snap-always w-screen min-h-screen flex items-center justify-center md:snap-center relative overflow-hidden pt-16 sm:pt-20 md:pt-28 before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-1 before:transform before:-translate-x-1/2">
+  ({ scrollToContact, scrollToServices, id, ...props }, ref) => (
+<section 
+  ref={ref}
+  id={id}
+  {...props}
+  className="md:snap-always w-screen min-h-screen flex items-center justify-center md:snap-center relative overflow-hidden pt-16 sm:pt-20 md:pt-28 before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-1 before:transform before:-translate-x-1/2"
+>
     <IconLogo className="opacity-5 absolute top-0 left-0 w-screen h-screen z-1" color="white" />
     
     {/* Floating particles */}

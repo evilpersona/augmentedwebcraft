@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router";
 import type { Route } from "./../+types/home";
 import { FullLogo, IconLogo } from "../components/Logo"; // Adjust import
 import HeroSection from "~/components/HeroSection";
@@ -97,6 +98,7 @@ const LOGO_FINAL_LEFT = 24;
 const ANIMATION_DURATION = 1500;
 
 export default function HomePage() {
+  const location = useLocation();
   const logoRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0); // 0 = splash, 1 = in navbar
   const [logoSwapped, setLogoSwapped] = useState(false);
@@ -133,6 +135,134 @@ useEffect(() => {
     document.body.style.overflow = 'unset';
   };
 }, [selectedService]);
+
+// Handle hash navigation with smooth scrolling
+useEffect(() => {
+  const handleHashNavigation = () => {
+    if (showSplash) return;
+    
+    const hash = location.hash;
+    if (!hash) return;
+    
+    let targetRef: React.RefObject<HTMLElement> | null = null;
+    
+    // Handle hash-based navigation
+    const sectionId = hash.substring(1);
+    switch (sectionId) {
+      case 'home':
+        targetRef = homeRef;
+        break;
+      case 'services':
+        targetRef = servicesRef;
+        break;
+      case 'contact':
+        targetRef = contactRef;
+        break;
+      default:
+        // Try to find element by ID
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const elementPosition = element.offsetTop;
+          const offsetPosition = elementPosition - 80; // Account for navbar
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+        return;
+    }
+    
+    // Scroll to section using existing function
+    if (targetRef) {
+      // Small delay to ensure page is ready after splash
+      setTimeout(() => {
+        scrollToSection(targetRef!, false); // Don't update URL since we're already there
+      }, showSplash ? 100 : 50);
+    }
+  };
+  
+  // Handle navigation on hash change
+  if (!showSplash) {
+    handleHashNavigation();
+  }
+  
+  // Listen for hash changes
+  window.addEventListener('hashchange', handleHashNavigation);
+  
+  return () => {
+    window.removeEventListener('hashchange', handleHashNavigation);
+  };
+}, [showSplash, location.hash, homeRef, servicesRef, contactRef]);
+
+// Update URL hash based on scroll position
+useEffect(() => {
+  if (showSplash) return;
+  
+  const handleScroll = () => {
+    const windowHeight = window.innerHeight;
+    
+    // Get all section positions
+    const sections = [
+      { ref: homeRef, hash: '' }, // No hash for home
+      { ref: servicesRef, hash: '#services' },
+      { ref: contactRef, hash: '#contact' }
+    ];
+    
+    // Find the current section based on scroll position
+    let currentSection = sections[0]; // Default to home
+    
+    // Special case: if we're at the very top, always use home
+    if (window.scrollY < 100) {
+      currentSection = sections[0];
+    } else {
+      // Find which section takes up most of the viewport
+      let maxVisibleArea = 0;
+      
+      for (const section of sections) {
+        if (section.ref.current) {
+          const element = section.ref.current;
+          const rect = element.getBoundingClientRect();
+          
+          // Calculate visible area of this section
+          const visibleTop = Math.max(0, -rect.top);
+          const visibleBottom = Math.min(rect.height, windowHeight - rect.top);
+          const visibleArea = Math.max(0, visibleBottom - visibleTop);
+          
+          if (visibleArea > maxVisibleArea) {
+            maxVisibleArea = visibleArea;
+            currentSection = section;
+          }
+        }
+      }
+    }
+    
+    // Update URL hash if it doesn't match current section
+    const currentHash = window.location.hash;
+    if (currentSection.hash !== currentHash) {
+      const newUrl = `${window.location.pathname}${currentSection.hash}`;
+      window.history.replaceState(null, '', newUrl);
+    }
+  };
+  
+  // Throttle scroll events for performance
+  let ticking = false;
+  const throttledScroll = () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        handleScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+  
+  window.addEventListener('scroll', throttledScroll, { passive: true });
+  
+  return () => {
+    window.removeEventListener('scroll', throttledScroll);
+  };
+}, [showSplash, homeRef, servicesRef, contactRef]);
 
 const handleServiceClick = (serviceName: string) => {
   // Find the service by name
@@ -337,7 +467,7 @@ useEffect(() => {
     }
   }, 250);
   }
-  function scrollToSection(ref: React.RefObject<HTMLElement>) {
+  function scrollToSection(ref: React.RefObject<HTMLElement>, updateUrl: boolean = true) {
     if (ref.current) {
       const element = ref.current;
       const elementPosition = element.offsetTop;
@@ -347,7 +477,22 @@ useEffect(() => {
         top: offsetPosition,
         behavior: "smooth"
       });
+      
+      // Update URL hash based on section
+      if (updateUrl) {
+        const sectionHash = getSectionHashFromRef(ref);
+        const newUrl = `${window.location.pathname}${sectionHash}`;
+        window.history.pushState(null, '', newUrl);
+      }
     }
+  }
+  
+  // Helper function to get section hash from ref
+  function getSectionHashFromRef(ref: React.RefObject<HTMLElement>) {
+    if (ref === homeRef) return '';
+    if (ref === servicesRef) return '#services';
+    if (ref === contactRef) return '#contact';
+    return '';
   }
 
   return (
@@ -509,36 +654,48 @@ useEffect(() => {
 
           {/* Menu Items with staggered animations */}
           <div className="flex flex-col items-center space-y-8 text-center">
-            <button
-              onClick={() => closeMenuAndScroll(homeRef)}
-              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group ${
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                closeMenuAndScroll(homeRef);
+              }}
+              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group block ${
                 isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
               style={{ transitionDelay: isMenuOpen ? '200ms' : '0ms' }}
             >
               <span className="relative z-10">Home</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-violet-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"></div>
-            </button>
-            <button
-              onClick={() => closeMenuAndScroll(servicesRef)}
-              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group ${
+            </a>
+            <a
+              href="/services"
+              onClick={(e) => {
+                e.preventDefault();
+                closeMenuAndScroll(servicesRef);
+              }}
+              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group block ${
                 isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
               style={{ transitionDelay: isMenuOpen ? '400ms' : '0ms' }}
             >
               <span className="relative z-10">Services</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-violet-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"></div>
-            </button>
-            <button
-              onClick={() => closeMenuAndScroll(contactRef)}
-              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group ${
+            </a>
+            <a
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                closeMenuAndScroll(contactRef);
+              }}
+              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group block ${
                 isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
               style={{ transitionDelay: isMenuOpen ? '600ms' : '0ms' }}
             >
               <span className="relative z-10">Contact</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-violet-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"></div>
-            </button>
+            </a>
           </div>
 
           {/* Company Logo in Menu - Bottom with animation */}
@@ -557,17 +714,19 @@ useEffect(() => {
         }`}
       >
         <HeroSection 
-          ref={homeRef} 
+          ref={homeRef}
+          id="home"
           scrollToContact={() => scrollToSection(contactRef)}
           scrollToServices={() => scrollToSection(servicesRef)}
         />
         <ServicesSection 
-          ref={servicesRef} 
+          ref={servicesRef}
+          id="services"
           selectedService={selectedService}
           setSelectedService={setSelectedService}
           closeModal={closeModal}
         />
-        <ContactSection ref={contactRef} />
+        <ContactSection ref={contactRef} id="contact" />
         <Footer onServiceClick={handleServiceClick} />
       </main>
 

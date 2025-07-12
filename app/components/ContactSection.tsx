@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import ContactForm from "./ContactForm";
 
-const ContactSection = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  (props, ref) => {
+interface ContactSectionProps extends React.HTMLAttributes<HTMLDivElement> {
+  id?: string;
+}
+
+const ContactSection = React.forwardRef<HTMLDivElement, ContactSectionProps>(
+  ({ id, ...props }, ref) => {
 
     return (
       <section
         ref={ref}
+        id={id}
         className="pt-16 sm:pt-32 pb-8 sm:pb-16 px-4 sm:px-8 lg:px-12 text-white relative flex flex-col items-start justify-center w-screen min-h-screen md:snap-always md:snap-center before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-1 before:transform before:-translate-x-1/2"
         {...props}
       >

@@ -85,10 +85,11 @@ interface ServicesSectionProps extends React.HTMLAttributes<HTMLDivElement> {
   selectedService?: typeof Services[0] | null;
   setSelectedService?: (service: typeof Services[0] | null) => void;
   closeModal?: () => void;
+  id?: string;
 }
 
 const ServicesSection = React.forwardRef<HTMLDivElement, ServicesSectionProps>(
-  ({ selectedService: externalSelectedService, setSelectedService: externalSetSelectedService, closeModal: externalCloseModal, ...props }, ref) => {
+  ({ selectedService: externalSelectedService, setSelectedService: externalSetSelectedService, closeModal: externalCloseModal, id, ...props }, ref) => {
     // Use internal state if external state is not provided
     const [internalSelectedService, setInternalSelectedService] = useState<typeof Services[0] | null>(null);
     
@@ -119,7 +120,9 @@ const ServicesSection = React.forwardRef<HTMLDivElement, ServicesSectionProps>(
     return (
     <section
       ref={ref}
+      id={id}
       className="pt-16 sm:pt-32 pb-8 sm:pb-16 px-4 sm:px-8 lg:px-12 text-white relative flex flex-col items-start justify-center w-screen min-h-screen md:snap-always md:snap-center before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-1 before:transform before:-translate-x-1/2"
+      {...props}
     >
       <div className="w-full max-w-7xl mx-auto">
         <div 
