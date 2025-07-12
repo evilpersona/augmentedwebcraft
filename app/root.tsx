@@ -48,6 +48,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="msapplication-TileColor" content="#050917" />
         <link rel="canonical" href="https://augmentedwebcraft.com" />
         
+        {/* Sitemap reference for search engines */}
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        
         <Meta />
         <Links />
       </head>
