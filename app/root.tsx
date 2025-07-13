@@ -30,10 +30,12 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Share+Tech&display=swap",
   },
   // Favicon and icons
-  { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
+  { rel: "icon", href: "/favicon-32x32.svg", sizes: "32x32", type: "image/svg+xml" },
   { rel: "icon", href: "/icon.svg", type: "image/svg+xml" },
-  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.svg", sizes: "180x180" },
   { rel: "manifest", href: "/site.webmanifest" },
+  // Fallback favicon for older browsers
+  { rel: "shortcut icon", href: "/favicon.ico" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
