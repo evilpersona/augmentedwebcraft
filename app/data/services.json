@@ -1,0 +1,194 @@
+{
+  "web-development": {
+    "id": "Web Development",
+    "slug": "web-development",
+    "desc": "Transform your digital presence with cutting-edge web solutions. We craft high-performance websites and applications that drive conversions, enhance user engagement, and scale with your business growth.",
+    "icon": "FaCode",
+    "detailedInfo": {
+      "overview": "We specialize in creating lightning-fast, conversion-optimized websites and web applications that deliver measurable business results. Our development approach combines modern design principles with robust architecture to ensure your digital platform performs flawlessly across all devices and drives sustainable growth.",
+      "features": [
+        "Custom responsive website design and development",
+        "High-conversion e-commerce platforms with advanced analytics",
+        "Progressive Web Applications (PWAs) for app-like experiences",
+        "Headless CMS solutions for content flexibility",
+        "Advanced SEO optimization and Core Web Vitals enhancement",
+        "Mobile-first design with cross-browser compatibility",
+        "API development and third-party integrations",
+        "Performance optimization achieving 90+ PageSpeed scores"
+      ],
+      "technologies": ["React", "Next.js", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "MongoDB", "Prisma", "GraphQL", "AWS", "Vercel"],
+      "pricing": "Starting from $1,200 for landing pages, $2,800 for business websites, $8,500+ for e-commerce platforms",
+      "process": [
+        {
+          "step": "01",
+          "title": "Strategy & Discovery",
+          "description": "Deep dive into your business objectives, target audience, and competitive landscape to create a data-driven development roadmap"
+        },
+        {
+          "step": "02", 
+          "title": "UX/UI Design",
+          "description": "Create conversion-focused wireframes and pixel-perfect designs that align with your brand identity and user expectations"
+        },
+        {
+          "step": "03",
+          "title": "Development & Testing", 
+          "description": "Build your solution using industry best practices with comprehensive testing across devices, browsers, and performance metrics"
+        },
+        {
+          "step": "04",
+          "title": "Launch & Optimization",
+          "description": "Deploy with monitoring setup, provide training, and offer 30-day post-launch support with performance optimization"
+        }
+      ]
+    },
+    "seo": {
+      "title": "Professional Web Development Services - Custom Websites & Applications",
+      "description": "Expert web development services specializing in React, Next.js, and modern technologies. We create high-performance, SEO-optimized websites that drive business growth and user engagement.",
+      "keywords": "web development, custom website design, React development, Next.js, responsive design, e-commerce development, progressive web apps, performance optimization, SEO optimization"
+    }
+  },
+  "development-assistance": {
+    "id": "Development Assistance",
+    "slug": "development-assistance",
+    "desc": "Scale your development capacity with senior-level engineers who integrate seamlessly into your team. Get expert guidance, code reviews, and hands-on development support across modern web technologies.",
+    "icon": "FaUsersGear",
+    "detailedInfo": {
+      "overview": "Bridge skill gaps and accelerate development timelines with our experienced engineering team. We provide flexible development support that adapts to your project needs, from short-term code reviews to long-term team augmentation with knowledge transfer.",
+      "features": [
+        "Senior developer assignments with proven track records",
+        "Comprehensive code reviews and architecture guidance",
+        "Technical mentoring and best practices implementation",
+        "Rapid bug fixes and emergency support (24-48 hour response)",
+        "Legacy system modernization and refactoring",
+        "Team training workshops and documentation creation",
+        "DevOps and deployment pipeline optimization",
+        "Quality assurance and testing implementation"
+      ],
+      "technologies": ["React", "Next.js", "PHP", "WordPress", "Python", "Django", "Laravel", "Vue.js", "Node.js", "TypeScript", "Docker", "AWS"],
+      "pricing": "$45-85/hour based on project complexity and developer seniority level, with discounted rates for long-term contracts",
+      "process": [
+        {
+          "step": "01",
+          "title": "Skills Assessment",
+          "description": "Evaluate your current team capabilities, project requirements, and identify the optimal support structure"
+        },
+        {
+          "step": "02", 
+          "title": "Team Integration",
+          "description": "Seamlessly integrate with your existing workflow, tools, and communication channels within 24-48 hours"
+        },
+        {
+          "step": "03",
+          "title": "Development Support", 
+          "description": "Provide expert development assistance, code reviews, and mentoring while maintaining your project momentum"
+        },
+        {
+          "step": "04",
+          "title": "Knowledge Transfer",
+          "description": "Document processes, train your team, and ensure sustainable long-term success with comprehensive handover"
+        }
+      ]
+    },
+    "seo": {
+      "title": "Development Team Augmentation & Expert Programming Support",
+      "description": "Professional development assistance and team augmentation services. Get expert React, PHP, WordPress, Python, and Django developers to scale your projects efficiently.",
+      "keywords": "development assistance, team augmentation, React developers, PHP developers, WordPress development, Python Django, code review, technical consulting, senior developers"
+    }
+  },
+  "custom-solutions": {
+    "id": "Custom Solutions & Integrations",
+    "slug": "custom-solutions",
+    "desc": "Streamline operations and unlock efficiency with custom software solutions. From API integrations to workflow automation, we build tailored systems that solve your unique business challenges.",
+    "icon": "MdMiscellaneousServices",
+    "detailedInfo": {
+      "overview": "We architect and develop custom software solutions that automate complex business processes, integrate disparate systems, and create competitive advantages through technology. Our solutions are designed for scalability, security, and long-term maintainability.",
+      "features": [
+        "RESTful and GraphQL API development and integration",
+        "Advanced workflow automation and business process optimization",
+        "Custom plugins, extensions, and middleware development",
+        "Enterprise-grade third-party service integrations",
+        "Database architecture, optimization, and migration services",
+        "Cloud infrastructure setup and DevOps automation",
+        "Real-time data synchronization and webhooks",
+        "Custom reporting and analytics dashboards"
+      ],
+      "technologies": ["REST APIs", "GraphQL", "Webhooks", "AWS", "Google Cloud", "Zapier", "Salesforce", "Stripe", "OAuth", "Redis", "Elasticsearch"],
+      "pricing": "Project-based pricing from $800 for simple integrations to $15,000+ for complex enterprise solutions",
+      "process": [
+        {
+          "step": "01",
+          "title": "Business Analysis",
+          "description": "Conduct thorough analysis of your current systems, workflows, and identify automation opportunities with ROI projections"
+        },
+        {
+          "step": "02", 
+          "title": "Solution Architecture",
+          "description": "Design scalable, secure solutions with detailed technical specifications and integration roadmaps"
+        },
+        {
+          "step": "03",
+          "title": "Development & Integration", 
+          "description": "Build and integrate custom solutions with comprehensive testing, security audits, and performance optimization"
+        },
+        {
+          "step": "04",
+          "title": "Deployment & Support",
+          "description": "Deploy with monitoring, provide user training, and offer ongoing optimization with performance analytics"
+        }
+      ]
+    },
+    "seo": {
+      "title": "Custom Software Solutions & API Integration Services",
+      "description": "Professional custom software development and API integration services. Automate workflows, connect systems, and build tailored solutions that streamline your business operations.",
+      "keywords": "custom software development, API integration, workflow automation, custom plugins, system integration, database optimization, cloud infrastructure, business process automation"
+    }
+  },
+  "maintenance-support": {
+    "id": "Ongoing Maintenance & Support",
+    "slug": "maintenance-support",
+    "desc": "Ensure peak performance and security with proactive website maintenance. Our comprehensive support keeps your digital assets running smoothly while you focus on growing your business.",
+    "icon": "GrHostMaintenance",
+    "detailedInfo": {
+      "overview": "Comprehensive maintenance and support services designed to maximize uptime, enhance security, and optimize performance. We provide proactive monitoring and rapid response support to prevent issues before they impact your business operations.",
+      "features": [
+        "Automated security updates and vulnerability patching",
+        "Real-time performance monitoring with detailed analytics",
+        "Automated daily backups with rapid disaster recovery",
+        "24/7 uptime monitoring with instant alert notifications",
+        "Content updates, modifications, and feature enhancements",
+        "Priority technical support with guaranteed response times",
+        "SEO monitoring and optimization recommendations",
+        "Detailed monthly performance and security reports"
+      ],
+      "technologies": ["Monitoring Tools", "Security Scanners", "CDN Services", "Backup Solutions", "SSL Management", "Performance Analytics"],
+      "pricing": "Monthly plans from $149/month for basic sites, $299/month for e-commerce, enterprise packages available",
+      "process": [
+        {
+          "step": "01",
+          "title": "Comprehensive Audit",
+          "description": "Complete assessment of your website's security, performance, and infrastructure to identify improvement opportunities"
+        },
+        {
+          "step": "02", 
+          "title": "System Setup",
+          "description": "Implement advanced monitoring, security protocols, automated backups, and performance optimization tools"
+        },
+        {
+          "step": "03",
+          "title": "Proactive Maintenance", 
+          "description": "Continuous monitoring, regular updates, performance optimization, and security enhancements with detailed reporting"
+        },
+        {
+          "step": "04",
+          "title": "Support & Enhancement",
+          "description": "Ongoing technical support, feature updates, and strategic recommendations to maximize your digital ROI"
+        }
+      ]
+    },
+    "seo": {
+      "title": "Professional Website Maintenance & Support Services",
+      "description": "Comprehensive website maintenance and support services. Keep your site secure, fast, and updated with proactive monitoring, security updates, and expert technical support.",
+      "keywords": "website maintenance, website support, security updates, performance monitoring, website backup, technical support, uptime monitoring, website optimization"
+    }
+  }
+}

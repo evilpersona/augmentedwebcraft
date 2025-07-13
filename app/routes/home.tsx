@@ -119,22 +119,7 @@ const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
 // Floating contact widget state
 const [isContactDrawerOpen, setIsContactDrawerOpen] = useState(false);
 
-// Modal state for services
-const [selectedService, setSelectedService] = useState<typeof Services[0] | null>(null);
-
-// Prevent scrolling when modal is open
-useEffect(() => {
-  if (selectedService) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = 'unset';
-  }
-  
-  // Cleanup on unmount
-  return () => {
-    document.body.style.overflow = 'unset';
-  };
-}, [selectedService]);
+// Remove modal state - services now navigate directly to pages
 
 // Handle hash navigation with smooth scrolling
 useEffect(() => {
@@ -265,17 +250,11 @@ useEffect(() => {
 }, [showSplash, homeRef, servicesRef, contactRef]);
 
 const handleServiceClick = (serviceName: string) => {
-  // Find the service by name
+  // Find the service by name and navigate to its page
   const service = Services.find(s => s.id === serviceName);
   if (service) {
-    setSelectedService(service);
-    // Scroll to services section
-    scrollToSection(servicesRef);
+    window.location.href = `/services/${service.slug}`;
   }
-};
-
-const closeModal = () => {
-  setSelectedService(null);
 };
 
 const toggleMenu = () => {
@@ -670,10 +649,6 @@ useEffect(() => {
             </a>
             <a
               href="/services"
-              onClick={(e) => {
-                e.preventDefault();
-                closeMenuAndScroll(servicesRef);
-              }}
               className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group block ${
                 isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
@@ -709,9 +684,12 @@ useEffect(() => {
 
       {/* Home Content */}
       <main
+        id="main-content"
         className={`relative z-0 transition-opacity duration-500 z-1 bg-black w-full min-h-screen parallax-section geometric-bg ${
           showSplash ? "opacity-0" : "opacity-100"
         }`}
+        role="main"
+        aria-label="Main website content"
       >
         <HeroSection 
           ref={homeRef}
@@ -722,108 +700,11 @@ useEffect(() => {
         <ServicesSection 
           ref={servicesRef}
           id="services"
-          selectedService={selectedService}
-          setSelectedService={setSelectedService}
-          closeModal={closeModal}
         />
         <ContactSection ref={contactRef} id="contact" />
         <Footer onServiceClick={handleServiceClick} />
       </main>
 
-      {/* Service Modal - Positioned at root level */}
-      {selectedService && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-85 flex items-center justify-center z-[9999] p-2 sm:p-4 before:absolute before:inset-0 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/polygon-bg-element.svg')] before:bg-no-repeat before:bg-center before:bg-cover before:opacity-40 before:z-[-1]"
-          onClick={closeModal}
-        >
-          <IconLogo className="opacity-10 absolute inset-0 w-full h-full z-[-1]" color="white" />
-          <div 
-            className="bg-white rounded-xl sm:rounded-2xl max-w-3xl w-full max-h-[80vh] relative shadow-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="bg-white border-b border-gray-200 p-3 sm:p-4 rounded-t-xl sm:rounded-t-2xl">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2 sm:space-x-3">
-                  <div className="p-2 bg-gradient-to-br from-blue-500 to-violet-500 rounded-lg">
-                    <selectedService.icon className="text-white" size={20} />
-                  </div>
-                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">{selectedService.id}</h2>
-                </div>
-                <button
-                  onClick={closeModal}
-                  className="text-gray-500 hover:text-gray-700 text-xl font-bold p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
-                >
-                  ×
-                </button>
-              </div>
-            </div>
-            
-            <div className="p-4 sm:p-5 overflow-y-auto max-h-[60vh]">
-              <div className="mb-4">
-                <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2">Overview</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{selectedService.detailedInfo.overview}</p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2">What We Offer</h3>
-                  <ul className="space-y-1.5">
-                    {selectedService.detailedInfo.features.slice(0, 4).map((feature, index) => (
-                      <li key={index} className="flex items-start space-x-2">
-                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></div>
-                        <span className="text-gray-700 text-xs sm:text-sm">{feature}</span>
-                      </li>
-                    ))}
-                    {selectedService.detailedInfo.features.length > 4 && (
-                      <li className="text-gray-500 text-xs italic">+ {selectedService.detailedInfo.features.length - 4} more features</li>
-                    )}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2">Technologies</h3>
-                  <div className="flex flex-wrap gap-1">
-                    {selectedService.detailedInfo.technologies.slice(0, 6).map((tech, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {selectedService.detailedInfo.technologies.length > 6 && (
-                      <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">+{selectedService.detailedInfo.technologies.length - 6}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-r from-blue-50 to-violet-50 rounded-lg p-3 mb-4">
-                <h3 className="text-base font-bold text-gray-800 mb-1">Pricing</h3>
-                <p className="text-gray-700 text-sm">{selectedService.detailedInfo.pricing}</p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-2 justify-center">
-                <button
-                  onClick={() => {
-                    closeModal();
-                    scrollToSection(contactRef);
-                  }}
-                  className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 text-white font-semibold py-2.5 px-5 rounded-lg transition-all duration-300 transform hover:scale-105 text-center text-sm"
-                >
-                  Get Started Today
-                </button>
-                <button
-                  onClick={closeModal}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2.5 px-5 rounded-lg transition-colors duration-300 text-sm"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Floating Contact Widget */}
       <div 

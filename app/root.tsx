@@ -13,6 +13,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import Header from "./components/Header";
 import HeroLogo from "./components/HeroLogo";
+import SkipNavigation from "./components/SkipNavigation";
 import TagManager from 'react-gtm-module';
 import { useEffect } from "react";
 
@@ -55,6 +56,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <SkipNavigation />
         {children}
         <ScrollRestoration />
         <Scripts />

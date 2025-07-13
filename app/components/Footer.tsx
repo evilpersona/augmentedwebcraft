@@ -1,22 +1,41 @@
 import React from "react";
 import { FullLogo } from "./Logo";
+import servicesData from "~/data/services.json";
 
 interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {
   onServiceClick?: (serviceName: string) => void;
 }
 
 const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
-  ({ onServiceClick, ...props }, ref) => (
+  ({ onServiceClick, ...props }, ref) => {
+    // Get services from JSON data
+    const services = Object.values(servicesData);
+    
+    const handleServiceClick = (serviceName: string) => {
+      // If onServiceClick is provided (home page), use it
+      if (onServiceClick) {
+        onServiceClick(serviceName);
+      } else {
+        // Otherwise, navigate to the service page
+        const service = services.find(s => s.id === serviceName);
+        if (service) {
+          window.location.href = `/services/${service.slug}`;
+        }
+      }
+    };
+
+    return (
     <footer 
       ref={ref} 
       className="pt-16 sm:pt-20 pb-8 sm:pb-12 px-4 sm:px-8 lg:px-12 text-white relative flex flex-col items-center justify-center w-full bg-[#050917] before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-1 before:transform before:-translate-x-1/2" 
+      role="contentinfo"
+      aria-label="Site footer with company information and links"
       {...props}
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 w-full">
         {/* Company Info */}
         <div 
           className="col-span-1 md:col-span-2 text-center md:text-left"
-          data-scroll-animation
           id="footer-company"
         >
           <FullLogo color="white" className="w-48 sm:w-56 lg:w-64 mb-4 sm:mb-6 mx-auto md:mx-0" />
@@ -40,56 +59,35 @@ const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
         </div>
 
         {/* Services */}
-        <div 
+        <nav 
           className="text-center md:text-left"
-          data-scroll-animation
           id="footer-services"
+          aria-labelledby="footer-services-heading"
         >
-          <h3 className="text-white text-lg sm:text-xl font-bold mb-4 sm:mb-6">Services</h3>
-          <ul className="space-y-2 sm:space-y-3 text-slate-300 text-sm sm:text-base">
-            <li>
-              <button 
-                onClick={() => onServiceClick?.('Web Development')}
-                className="hover:text-blue-300 transition-all duration-300 cursor-pointer block w-full text-center md:text-left hover:scale-105 hover:translate-x-2"
-              >
-                Web Development
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => onServiceClick?.('Development Assistance')}
-                className="hover:text-blue-300 transition-all duration-300 cursor-pointer block w-full text-center md:text-left hover:scale-105 hover:translate-x-2"
-              >
-                Development Assistance
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => onServiceClick?.('Custom Solutions & Integrations')}
-                className="hover:text-blue-300 transition-all duration-300 cursor-pointer block w-full text-center md:text-left hover:scale-105 hover:translate-x-2"
-              >
-                Custom Solutions
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => onServiceClick?.('Ongoing Maintenance & Support')}
-                className="hover:text-blue-300 transition-all duration-300 cursor-pointer block w-full text-center md:text-left hover:scale-105 hover:translate-x-2"
-              >
-                Maintenance & Support
-              </button>
-            </li>
+          <h3 id="footer-services-heading" className="text-white text-lg sm:text-xl font-bold mb-4 sm:mb-6">Services</h3>
+          <ul className="space-y-2 sm:space-y-3 text-slate-300 text-sm sm:text-base" role="list">
+            {services.map((service, index) => (
+              <li key={service.slug}>
+                <button 
+                  onClick={() => handleServiceClick(service.id)}
+                  className="hover:text-blue-300 transition-all duration-300 cursor-pointer block w-full text-center md:text-left hover:scale-105 hover:translate-x-2 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded"
+                  aria-label={`Learn more about ${service.id} service`}
+                >
+                  {service.id}
+                </button>
+              </li>
+            ))}
           </ul>
-        </div>
+        </nav>
 
         {/* Technologies & Links */}
         <div 
           className="text-center md:text-left"
-          data-scroll-animation
           id="footer-technologies"
+          aria-labelledby="footer-technologies-heading"
         >
-          <h3 className="text-white text-lg sm:text-xl font-bold mb-4 sm:mb-6">Technologies</h3>
-          <ul className="space-y-2 sm:space-y-3 text-slate-300 text-sm sm:text-base">
+          <h3 id="footer-technologies-heading" className="text-white text-lg sm:text-xl font-bold mb-4 sm:mb-6">Technologies</h3>
+          <ul className="space-y-2 sm:space-y-3 text-slate-300 text-sm sm:text-base" role="list">
             <li>React & Next.js</li>
             <li>TypeScript</li>
             <li>Python & Django</li>
@@ -106,16 +104,17 @@ const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
           <div className="text-slate-400 text-xs sm:text-sm text-center md:text-left">
             Copyright &copy; 2025 Augmented Webcraft. All rights reserved.
           </div>
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-slate-400 text-xs sm:text-sm">
-            <a href="#" className="hover:text-blue-300 transition-all duration-300 cursor-pointer hover:scale-105">Privacy Policy</a>
-            <a href="#" className="hover:text-blue-300 transition-all duration-300 cursor-pointer hover:scale-105">Terms of Service</a>
-            <a href="#" className="hover:text-blue-300 transition-all duration-300 cursor-pointer hover:scale-105">Accessibility</a>
-          </div>
+          <nav className="flex flex-wrap justify-center gap-4 sm:gap-6 text-slate-400 text-xs sm:text-sm" aria-label="Legal pages navigation">
+            <a href="/privacy" className="hover:text-blue-300 transition-all duration-300 cursor-pointer hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded">Privacy Policy</a>
+            <a href="/terms" className="hover:text-blue-300 transition-all duration-300 cursor-pointer hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded">Terms of Service</a>
+            <a href="/accessibility" className="hover:text-blue-300 transition-all duration-300 cursor-pointer hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded">Accessibility Statement</a>
+          </nav>
         </div>
       </div>
     </footer>
-  )
-)
+    );
+  }
+);
 
 Footer.displayName = "Footer"
 export default Footer

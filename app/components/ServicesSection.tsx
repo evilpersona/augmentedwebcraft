@@ -5,115 +5,50 @@ import { FaUsersGear } from "react-icons/fa6";
 import { MdMiscellaneousServices } from "react-icons/md";
 import { IconLogo } from "./Logo";
 import TagManager from 'react-gtm-module';
+import servicesData from "~/data/services.json";
 
-const Services = [
-    {
-        'id':'Web Development',
-        'desc': 'From sleek marketing sites to dynamic web applications, we design and build modern websites using the latest frameworks and best practices',
-        'icon': FaCode,
-        'detailedInfo': {
-            'overview': 'We create modern, responsive websites and web applications that deliver exceptional user experiences and drive business growth.',
-            'features': [
-                'Custom website design and development',
-                'E-commerce platforms and online stores',
-                'Progressive Web Applications (PWAs)',
-                'Content Management Systems',
-                'Performance optimization and SEO',
-                'Mobile-first responsive design'
-            ],
-            'technologies': ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'MongoDB'],
-            'pricing': 'Starting from $2,500 for basic websites, custom quotes for complex applications'
-        }
-    },
-    {
-        'id': 'Development Assistance',
-        'desc': 'Need extra hands or advanced skills for your team? We provide reliable development support for projects big and small, with deep expertise in React, Next.js, PHP, WordPress, Python, and Django.',
-        'icon': FaUsersGear,
-        'detailedInfo': {
-            'overview': 'Augment your development team with our experienced engineers who integrate seamlessly with your existing workflow.',
-            'features': [
-                'Dedicated developer assignments',
-                'Code review and mentoring',
-                'Technical architecture consultation',
-                'Emergency bug fixes and support',
-                'Legacy system modernization',
-                'Team training and knowledge transfer'
-            ],
-            'technologies': ['React', 'Next.js', 'PHP', 'WordPress', 'Python', 'Django', 'Laravel', 'Vue.js'],
-            'pricing': '$75-150/hour depending on expertise level and project complexity'
-        }
-    },
-    {
-        'id': 'Custom Solutions & Integrations',
-        'desc': 'Whether it\'s automating workflows, connecting APIs, or building custom plugins and features, we solve complex technical challenges so you can focus on your business.',
-        'icon': MdMiscellaneousServices,
-        'detailedInfo': {
-            'overview': 'We build custom software solutions and integrations that streamline your business processes and connect your systems.',
-            'features': [
-                'API development and integration',
-                'Workflow automation tools',
-                'Custom plugins and extensions',
-                'Third-party service integrations',
-                'Database design and optimization',
-                'Cloud infrastructure setup'
-            ],
-            'technologies': ['REST APIs', 'GraphQL', 'Webhooks', 'AWS', 'Google Cloud', 'Zapier', 'Salesforce'],
-            'pricing': 'Project-based pricing from $1,500 to $25,000+ depending on complexity'
-        }
-    },
-    {
-        'id': 'Ongoing Maintenance & Support',
-        'desc': 'Keep your site running smoothly with proactive updates, security monitoring, and technical support you can count on.',
-        'icon': GrHostMaintenance,
-        'detailedInfo': {
-            'overview': 'Comprehensive maintenance and support services to keep your website secure, updated, and performing optimally.',
-            'features': [
-                'Regular security updates and patches',
-                'Performance monitoring and optimization',
-                'Backup and disaster recovery',
-                '24/7 uptime monitoring',
-                'Content updates and modifications',
-                'Technical support and troubleshooting'
-            ],
-            'technologies': ['Monitoring Tools', 'Security Scanners', 'CDN Services', 'Backup Solutions'],
-            'pricing': 'Monthly retainers starting from $250/month, annual plans available'
-        }
-    }
-]
+// Icon mapping for services
+const iconMap = {
+  FaCode,
+  FaUsersGear,
+  MdMiscellaneousServices,
+  GrHostMaintenance,
+};
+
+// Convert services data to match existing format
+const Services = Object.values(servicesData).map(service => ({
+  id: service.id,
+  desc: service.desc,
+  icon: iconMap[service.icon as keyof typeof iconMap],
+  slug: service.slug,
+  detailedInfo: service.detailedInfo
+}));
 
 interface ServicesSectionProps extends React.HTMLAttributes<HTMLDivElement> {
-  selectedService?: typeof Services[0] | null;
-  setSelectedService?: (service: typeof Services[0] | null) => void;
-  closeModal?: () => void;
   id?: string;
 }
 
 const ServicesSection = React.forwardRef<HTMLDivElement, ServicesSectionProps>(
-  ({ selectedService: externalSelectedService, setSelectedService: externalSetSelectedService, closeModal: externalCloseModal, id, ...props }, ref) => {
-    // Use internal state if external state is not provided
-    const [internalSelectedService, setInternalSelectedService] = useState<typeof Services[0] | null>(null);
+  ({ id, ...props }, ref) => {
     
-    const selectedService = externalSelectedService !== undefined ? externalSelectedService : internalSelectedService;
-    const setSelectedService = externalSetSelectedService || setInternalSelectedService;
-    
-    const openModal = (service: typeof Services[0]) => {
-      // Track service modal opening in GTM
+    const navigateToService = (service: typeof Services[0]) => {
+      // Track service navigation in GTM
       TagManager.dataLayer({
         dataLayer: {
-          event: 'service_modal_open',
+          event: 'service_page_navigate',
           service_name: service.id,
           service_category: 'web_development'
         }
       });
       
-      setSelectedService(service);
+      // Navigate to individual service page
+      window.location.href = `/services/${service.slug}`;
     };
 
-    const closeModal = () => {
-      if (externalCloseModal) {
-        externalCloseModal();
-      } else {
-        setInternalSelectedService(null);
+    const handleKeyDown = (e: React.KeyboardEvent, service: typeof Services[0]) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        navigateToService(service);
       }
     };
 
@@ -140,11 +75,15 @@ const ServicesSection = React.forwardRef<HTMLDivElement, ServicesSectionProps>(
           {Services.map((item, i) => (
           <div 
             key={i}
-            onClick={() => openModal(item)}
-            className="group w-full min-h-32 sm:min-h-36 bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center cursor-pointer transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:bg-gradient-to-br hover:from-white hover:to-gray-100 border border-gray-200 hover:border-blue-300 relative overflow-hidden"
+            onClick={() => navigateToService(item)}
+            onKeyDown={(e) => handleKeyDown(e, item)}
+            className="group w-full min-h-32 sm:min-h-36 bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center cursor-pointer transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:bg-gradient-to-br hover:from-white hover:to-gray-100 border border-gray-200 hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:shadow-2xl focus:scale-105 relative overflow-hidden"
             data-scroll-animation
             id={`service-card-${i}`}
             style={{ animationDelay: `${i * 0.15}s` }}
+            tabIndex={0}
+            role="button"
+            aria-label={`Navigate to ${item.id} service page`}
           >
               {/* Hover gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-violet-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -158,7 +97,7 @@ const ServicesSection = React.forwardRef<HTMLDivElement, ServicesSectionProps>(
                   <h3 className="text-black text-lg sm:text-xl font-bold mb-2 group-hover:text-gray-800 transition-all duration-500 text-center sm:text-left group-hover:translate-x-2">{item.id}</h3>
                   <p className="text-gray-700 text-sm leading-relaxed group-hover:text-gray-600 transition-all duration-500 text-center sm:text-left">{item.desc}</p>
                   <div className="mt-3 text-blue-600 font-medium group-hover:text-blue-700 transition-all duration-500 text-sm text-center sm:text-left group-hover:translate-x-4">
-                      Learn more →
+                      View service page →
                   </div>
               </div>
           </div>  

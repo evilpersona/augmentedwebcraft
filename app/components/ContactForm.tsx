@@ -138,8 +138,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
   };
 
   return (
-    <div className={`bg-gray-100 rounded-xl p-4 sm:p-6 lg:p-8 border border-slate-300 ${className}`}>
-      <h3 className="text-black text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Request a Consultation</h3>
+    <section className={`bg-gray-100 rounded-xl p-4 sm:p-6 lg:p-8 border border-slate-300 ${className}`} role="form" aria-labelledby="contact-form-heading">
+      <h3 id="contact-form-heading" className="text-black text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Request a Consultation</h3>
       
       {isSubmitted ? (
         <div className="text-center py-8">
@@ -148,7 +148,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
           <p className="text-slate-600">We'll get back to you within 24 hours.</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" noValidate aria-describedby={errors.submit ? 'form-error' : undefined}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
               <label htmlFor="name" className="block text-black text-sm font-medium mb-2">
@@ -161,12 +161,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black placeholder-slate-500 focus:outline-none focus:ring-1 text-sm sm:text-base form-field ${
+                aria-invalid={errors.name ? 'true' : 'false'}
+                aria-describedby={errors.name ? 'name-error' : undefined}
+                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black placeholder-slate-500 focus:outline-none focus:ring-2 text-sm sm:text-base form-field ${
                   errors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500'
                 }`}
                 placeholder="Your full name"
               />
-              {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+              {errors.name && <p id="name-error" className="mt-1 text-sm text-red-600" role="alert">{errors.name}</p>}
             </div>
             <div>
               <label htmlFor="email" className="block text-black text-sm font-medium mb-2">
@@ -179,12 +181,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black placeholder-slate-500 focus:outline-none focus:ring-1 text-sm sm:text-base form-field ${
-                  errors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500'
+                aria-invalid={errors.email ? 'true' : 'false'}
+                aria-describedby={errors.email ? 'email-error' : undefined}
+                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black placeholder-slate-500 focus:outline-none focus:ring-2 text-sm sm:text-base form-field ${
+                  errors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500'
                 }`}
                 placeholder="your@email.com"
               />
-              {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+              {errors.email && <p id="email-error" className="mt-1 text-sm text-red-600" role="alert">{errors.email}</p>}
             </div>
           </div>
 
@@ -198,7 +202,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
               value={formData.service}
               onChange={handleInputChange}
               required
-              className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black focus:outline-none focus:ring-1 text-sm sm:text-base form-field ${
+              aria-invalid={errors.service ? 'true' : 'false'}
+              aria-describedby={errors.service ? 'service-error' : undefined}
+              className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black focus:outline-none focus:ring-2 text-sm sm:text-base form-field ${
                 errors.service ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500'
               }`}
             >
@@ -207,7 +213,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
                 <option key={service} value={service}>{service}</option>
               ))}
             </select>
-            {errors.service && <p className="mt-1 text-sm text-red-600">{errors.service}</p>}
+            {errors.service && <p id="service-error" className="mt-1 text-sm text-red-600" role="alert">{errors.service}</p>}
           </div>
 
           {formData.service === 'Other' && (
@@ -221,12 +227,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
                 name="otherService"
                 value={formData.otherService}
                 onChange={handleInputChange}
-                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black placeholder-slate-500 focus:outline-none focus:ring-1 text-sm sm:text-base form-field ${
-                  errors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500'
+                aria-invalid={errors.otherService ? 'true' : 'false'}
+                aria-describedby={errors.otherService ? 'other-service-error' : undefined}
+                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black placeholder-slate-500 focus:outline-none focus:ring-2 text-sm sm:text-base form-field ${
+                  errors.otherService ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500'
                 }`}
                 placeholder="Describe the service you need"
               />
-              {errors.otherService && <p className="mt-1 text-sm text-red-600">{errors.otherService}</p>}
+              {errors.otherService && <p id="other-service-error" className="mt-1 text-sm text-red-600" role="alert">{errors.otherService}</p>}
             </div>
           )}
 
@@ -241,12 +249,14 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
               onChange={handleInputChange}
               required
               rows={3}
-              className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black placeholder-slate-500 focus:outline-none focus:ring-1 resize-none text-sm sm:text-base form-field ${
+              aria-invalid={errors.projectDetails ? 'true' : 'false'}
+              aria-describedby={errors.projectDetails ? 'project-details-error' : undefined}
+              className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black placeholder-slate-500 focus:outline-none focus:ring-2 resize-none text-sm sm:text-base form-field ${
                 errors.projectDetails ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500'
               }`}
               placeholder="Tell us about your project, goals, and requirements..."
             />
-            {errors.projectDetails && <p className="mt-1 text-sm text-red-600">{errors.projectDetails}</p>}
+            {errors.projectDetails && <p id="project-details-error" className="mt-1 text-sm text-red-600" role="alert">{errors.projectDetails}</p>}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -297,7 +307,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
           </div>
 
           {errors.submit && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div id="form-error" className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg" role="alert">
               <p className="text-sm text-red-600">{errors.submit}</p>
             </div>
           )}
@@ -305,16 +315,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full font-medium py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white text-sm sm:text-base cursor-pointer magnetic-pull micro-tilt ${
+            aria-describedby={isSubmitting ? 'submit-status' : undefined}
+            className={`w-full font-medium py-3 sm:py-4 px-4 sm:px-6 rounded-lg transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white text-sm sm:text-base cursor-pointer hover:scale-105 ${
               isSubmitting 
                 ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-gradient-to-r from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 text-white'
+                : 'bg-gradient-to-r from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 text-white button-glow-animation'
             }`}
           >
             {isSubmitting ? (
               <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Sending...
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" aria-hidden="true"></div>
+                <span id="submit-status">Sending...</span>
               </div>
             ) : (
               'Send Consultation Request'
@@ -322,7 +333,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
           </button>
         </form>
       )}
-    </div>
+    </section>
   );
 };
 
