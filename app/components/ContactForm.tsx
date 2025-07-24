@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useFetcher } from "react-router";
 import TagManager from 'react-gtm-module';
 
 interface ContactFormProps {
@@ -7,6 +8,7 @@ interface ContactFormProps {
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSuccess }) => {
+  const fetcher = useFetcher();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,7 +23,54 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const isSubmitting = fetcher.state === "submitting";
+
+  // Handle fetcher response
+  useEffect(() => {
+    if (fetcher.data) {
+      if (fetcher.data.success) {
+        console.log('Form submitted successfully via SendGrid');
+        
+        // Track form submission in GTM
+        TagManager.dataLayer({
+          dataLayer: {
+            event: 'form_submit',
+            form_name: 'consultation_request',
+            form_data: {
+              service: formData.service,
+              timeline: formData.timeline,
+              budget: formData.budget
+            }
+          }
+        });
+        
+        setIsSubmitted(true);
+        
+        // Call success callback if provided
+        onSubmitSuccess?.();
+        
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({
+            name: '',
+            email: '',
+            company: '',
+            phone: '',
+            service: '',
+            projectDetails: '',
+            timeline: '',
+            budget: '',
+            otherService: ''
+          });
+          setErrors({});
+        }, 3000);
+      } else if (fetcher.data.error) {
+        setErrors({ submit: fetcher.data.error });
+      }
+    }
+  }, [fetcher.data, formData.service, formData.timeline, formData.budget, onSubmitSuccess]);
 
   const services = [
     'Web Development',
@@ -80,72 +129,31 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
       return;
     }
     
-    setIsSubmitting(true);
-    
-    try {
-      // Send emails via server action
-      const response = await fetch('/contact-api', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+    // Clear any previous submit errors
+    if (errors.submit) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.submit;
+        return newErrors;
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to send email');
-      }
-      
-      console.log('Form submitted successfully via SendGrid');
-      
-      // Track form submission in GTM
-      TagManager.dataLayer({
-        dataLayer: {
-          event: 'form_submit',
-          form_name: 'consultation_request',
-          form_data: {
-            service: formData.service,
-            timeline: formData.timeline,
-            budget: formData.budget
-          }
-        }
-      });
-      
-      setIsSubmitted(true);
-      
-      // Call success callback if provided
-      onSubmitSuccess?.();
-      
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          phone: '',
-          service: '',
-          projectDetails: '',
-          timeline: '',
-          budget: '',
-          otherService: ''
-        });
-        setErrors({});
-      }, 3000);
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setErrors({ submit: 'There was an error submitting your request. Please try again.' });
-    } finally {
-      setIsSubmitting(false);
     }
+    
+    // Submit using fetcher
+    fetcher.submit(
+      formData,
+      {
+        method: "POST",
+        action: "/contact-api",
+        encType: "application/json"
+      }
+    );
   };
 
   return (
