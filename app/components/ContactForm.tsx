@@ -146,12 +146,15 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
     }
     
     // Submit using fetcher
+    const submitData = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      submitData.append(key, value);
+    });
+    
     fetcher.submit(
-      formData,
+      submitData,
       {
-        method: "POST",
-        action: "/contact-api",
-        encType: "application/json"
+        method: "POST"
       }
     );
   };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import type { Route } from "./../+types/contact";
+import { sendContactEmails } from "~/lib/sendgrid.server";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 import ContactForm from "~/components/ContactForm";
@@ -29,6 +30,44 @@ export const meta: Route.MetaFunction = () => {
     { name: "twitter:description", content: "Ready to bring your digital project to life? Contact us for expert consultation." },
   ];
 };
+
+export async function action({ request }: Route.ActionArgs) {
+  if (request.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+
+  try {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    
+    // Validate required fields
+    if (!data.name || !data.email || !data.service || !data.projectDetails) {
+      return new Response(JSON.stringify({ error: "Missing required fields" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    await sendContactEmails(data as any);
+    
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    });
+  } catch (error) {
+    console.error("Contact form error:", error);
+    return new Response(
+      JSON.stringify({ error: "Failed to send email. Please try again." }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      }
+    );
+  }
+}
 
 export default function ContactPage() {
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
