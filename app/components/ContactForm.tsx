@@ -141,7 +141,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
       const confirmationResponse = await fetch('https://api.sendgrid.com/v3/mail/send', {
         method: 'POST',
         headers: {
-          'Authorization': 'Bearer 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',
+          'Authorization': `Bearer ${process.env.SENDGRID}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
