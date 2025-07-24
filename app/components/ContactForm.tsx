@@ -154,7 +154,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
     fetcher.submit(
       submitData,
       {
-        method: "POST"
+        method: "POST",
+        action: "/contact"
       }
     );
   };
