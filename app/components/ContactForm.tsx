@@ -91,7 +91,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ className = "", onSubmitSucce
     
     try {
       // Send emails via server action
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/contact-api', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
