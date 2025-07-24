@@ -2,27 +2,12 @@ import React from "react";
 import { FullLogo } from "./Logo";
 import servicesData from "~/data/services.json";
 
-interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {
-  onServiceClick?: (serviceName: string) => void;
-}
+interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
-  ({ onServiceClick, ...props }, ref) => {
+  ({ ...props }, ref) => {
     // Get services from JSON data
     const services = Object.values(servicesData);
-    
-    const handleServiceClick = (serviceName: string) => {
-      // If onServiceClick is provided (home page), use it
-      if (onServiceClick) {
-        onServiceClick(serviceName);
-      } else {
-        // Otherwise, navigate to the service page
-        const service = services.find(s => s.id === serviceName);
-        if (service) {
-          window.location.href = `/services/${service.slug}`;
-        }
-      }
-    };
 
     return (
     <footer 
@@ -68,13 +53,13 @@ const Footer = React.forwardRef<HTMLDivElement, FooterProps>(
           <ul className="space-y-2 sm:space-y-3 text-slate-300 text-sm sm:text-base" role="list">
             {services.map((service, index) => (
               <li key={service.slug}>
-                <button 
-                  onClick={() => handleServiceClick(service.id)}
+                <a 
+                  href={`/services/${service.slug}`}
                   className="hover:text-blue-300 transition-all duration-300 cursor-pointer block w-full text-center md:text-left hover:scale-105 hover:translate-x-2 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded"
                   aria-label={`Learn more about ${service.id} service`}
                 >
                   {service.id}
-                </button>
+                </a>
               </li>
             ))}
           </ul>

@@ -91,7 +91,7 @@ export default function NotFoundPage() {
         </div>
       </div>
       
-      <Footer onServiceClick={() => {}} />
+      <Footer />
     </div>
   );
 }

@@ -249,14 +249,6 @@ useEffect(() => {
   };
 }, [showSplash, homeRef, servicesRef, contactRef]);
 
-const handleServiceClick = (serviceName: string) => {
-  // Find the service by name and navigate to its page
-  const service = Services.find(s => s.id === serviceName);
-  if (service) {
-    window.location.href = `/services/${service.slug}`;
-  }
-};
-
 const toggleMenu = () => {
   setIsMenuOpen(!isMenuOpen);
 };
@@ -702,7 +694,7 @@ useEffect(() => {
           id="services"
         />
         <ContactSection ref={contactRef} id="contact" />
-        <Footer onServiceClick={handleServiceClick} />
+        <Footer />
       </main>
 
 
