@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import type { Route } from "./../+types/accessibility";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 import FloatingConsultationWidget from "~/components/FloatingConsultationWidget";
 
-export const meta: Route.MetaFunction = () => {
+export const meta: any = () => {
   return [
     { title: "Accessibility Statement - Augmented Webcraft" },
     { 
@@ -222,7 +221,7 @@ export default function AccessibilityPage() {
         </div>
       </section>
 
-      <Footer onServiceClick={() => {}} />
+      <Footer />
       
       {/* Floating Consultation Widget */}
       <FloatingConsultationWidget />

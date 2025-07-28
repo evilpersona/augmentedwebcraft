@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import type { Route } from "./../+types/services.$slug";
 import { FaCode } from "react-icons/fa";
 import { FaUsersGear } from "react-icons/fa6";
 import { MdMiscellaneousServices } from "react-icons/md";
@@ -21,7 +20,7 @@ const iconMap = {
 };
 
 // SEO Meta Tags Export
-export const meta: Route.MetaFunction = ({ params }) => {
+export const meta: any = ({ params }) => {
   const { slug } = params;
   const service = servicesData[slug as keyof typeof servicesData];
   
@@ -270,7 +269,7 @@ export default function ServicePage() {
         </div>
       </section>
 
-      <Footer onServiceClick={() => {}} />
+      <Footer />
       
       {/* Floating Consultation Widget */}
       <FloatingConsultationWidget />

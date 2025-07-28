@@ -1,0 +1,136 @@
+[
+  {
+    "slug": "react-performance-tips",
+    "title": "5 Essential React Performance Optimization Tips",
+    "date": "2025-01-20",
+    "author": "Chris Collareta",
+    "excerpt": "Learn how to optimize your React applications for better performance with these practical tips and techniques.",
+    "featured": false,
+    "tags": ["react", "performance", "optimization", "tutorial"],
+    "image": "/images/blog/react-performance.jpg",
+    "sections": [
+      {
+        "type": "paragraph",
+        "content": "React applications can sometimes suffer from performance issues as they grow in complexity. Here are five essential tips to keep your React apps running smoothly."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "1. Use React.memo for Component Memoization"
+      },
+      {
+        "type": "paragraph",
+        "content": "Prevent unnecessary re-renders by wrapping your components with `React.memo`:"
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "const ExpensiveComponent = React.memo(({ data }) => {\n  return (\n    <div>\n      {/* Complex rendering logic */}\n    </div>\n  );\n});"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "2. Optimize State Updates with useCallback and useMemo"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use these hooks to prevent unnecessary calculations and function recreations:"
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "const MemoizedComponent = () => {\n  const expensiveValue = useMemo(() => {\n    return computeExpensiveValue(data);\n  }, [data]);\n\n  const memoizedCallback = useCallback(() => {\n    doSomething(a, b);\n  }, [a, b]);\n\n  return <div>{expensiveValue}</div>;\n};"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "3. Implement Virtual Scrolling for Large Lists"
+      },
+      {
+        "type": "paragraph",
+        "content": "For lists with hundreds or thousands of items, use virtual scrolling libraries like react-window or react-virtualized to render only visible items."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "4. Lazy Load Components and Routes"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use React.lazy() and Suspense to split your code and load components only when needed:"
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "const LazyComponent = React.lazy(() => import('./LazyComponent'));\n\nfunction App() {\n  return (\n    <Suspense fallback={<div>Loading...</div>}>\n      <LazyComponent />\n    </Suspense>\n  );\n}"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "5. Profile with React DevTools"
+      },
+      {
+        "type": "paragraph",
+        "content": "Always measure performance using React DevTools Profiler to identify actual bottlenecks before optimizing."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Conclusion"
+      },
+      {
+        "type": "paragraph",
+        "content": "By implementing these optimization techniques, you can significantly improve your React application's performance. Remember to always measure first, then optimize based on actual performance data."
+      }
+    ]
+  },
+  {
+    "slug": "example-blog-post",
+    "title": "Getting Started with Web Development",
+    "date": "2025-01-15",
+    "author": "Chris Collareta",
+    "excerpt": "A beginner's guide to starting your journey in web development.",
+    "featured": true,
+    "tags": ["web development", "beginner", "tutorial"],
+    "image": "/images/blog/web-development.jpg",
+    "sections": [
+      {
+        "type": "paragraph",
+        "content": "Web development is an exciting field with endless opportunities for creativity and innovation. Whether you're looking to build websites, web applications, or pursue a career in tech, this guide will help you get started."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "What is Web Development?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Web development involves creating and maintaining websites and web applications. It encompasses everything from simple static pages to complex web applications with databases and user authentication."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Essential Technologies to Learn"
+      },
+      {
+        "type": "list",
+        "items": [
+          "**HTML**: The structure and content of web pages",
+          "**CSS**: Styling and layout of web pages",
+          "**JavaScript**: Programming language for interactive functionality",
+          "**React or Vue**: Popular frontend frameworks",
+          "**Node.js**: Server-side JavaScript runtime"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Getting Started"
+      },
+      {
+        "type": "paragraph",
+        "content": "Start with the basics: HTML, CSS, and JavaScript. Build simple projects to practice your skills, and gradually work your way up to more complex applications."
+      }
+    ]
+  }
+]

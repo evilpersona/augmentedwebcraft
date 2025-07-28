@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import type { Route } from "./../+types/contact";
 import { sendContactEmails } from "~/lib/sendgrid.server";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
@@ -7,7 +6,7 @@ import ContactForm from "~/components/ContactForm";
 import CalendlyModal from "~/components/CalendlyModal";
 import FloatingConsultationWidget from "~/components/FloatingConsultationWidget";
 
-export const meta: Route.MetaFunction = () => {
+export const meta: any = () => {
   return [
     { title: "Contact Us - Augmented Webcraft | Get Your Project Started" },
     { 
@@ -31,7 +30,7 @@ export const meta: Route.MetaFunction = () => {
   ];
 };
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request }: { request: Request }) {
   if (request.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
       status: 405,
@@ -246,7 +245,7 @@ export default function ContactPage() {
         onClose={closeCalendly}
       />
 
-      <Footer onServiceClick={() => {}} />
+      <Footer />
       
       {/* Floating Consultation Widget */}
       <FloatingConsultationWidget />

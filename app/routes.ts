@@ -4,6 +4,10 @@ export default [
   route("/", "routes/home.tsx"),   // Home page
   route("/services", "routes/services.tsx"),   // Services page
   route("/services/:slug", "routes/services.$slug.tsx"),   // Individual service pages
+  // route("/blog", "routes/blog.tsx"),   // Blog listing page
+  // route("/blog/:slug", "routes/blog.$slug.tsx"),   // Individual blog posts
+  // route("/projects", "routes/projects.tsx"),   // Projects listing page
+  // route("/projects/:slug", "routes/projects.$slug.tsx"),   // Individual project pages
   route("/contact", "routes/contact.tsx"),    // Contact page
   route("/privacy", "routes/privacy.tsx"),    // Privacy Policy page
   route("/terms", "routes/terms.tsx"),        // Terms of Service page

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
-import type { Route } from "./../+types/home";
 import { FullLogo, IconLogo } from "../components/Logo"; // Adjust import
 import HeroSection from "~/components/HeroSection";
 import Footer from "~/components/Footer";
@@ -9,7 +8,7 @@ import ContactSection from "~/components/ContactSection";
 import ContactForm from "~/components/ContactForm";
 
 // SEO Meta Tags Export
-export const meta: Route.MetaFunction = () => {
+export const meta: any = () => {
   return [
     { title: "Augmented Webcraft - Expert Web Development & Technical Consulting" },
     { 
@@ -324,9 +323,9 @@ useEffect(() => {
       const parallaxElements = document.querySelectorAll('.parallax-element');
       
       parallaxElements.forEach((element) => {
-        const speed = parseFloat(element.dataset.speed) || 0.5;
+        const speed = parseFloat((element as HTMLElement).dataset.speed || '0.5');
         const yPos = -(scrolled * speed);
-        element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        (element as HTMLElement).style.transform = `translate3d(0, ${yPos}px, 0)`;
       });
     };
 

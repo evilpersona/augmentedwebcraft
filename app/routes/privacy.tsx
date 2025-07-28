@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import type { Route } from "./../+types/privacy";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 import FloatingConsultationWidget from "~/components/FloatingConsultationWidget";
 
-export const meta: Route.MetaFunction = () => {
+export const meta: any = () => {
   return [
     { title: "Privacy Policy - Augmented Webcraft" },
     { 
@@ -190,7 +189,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <Footer onServiceClick={() => {}} />
+      <Footer />
       
       {/* Floating Consultation Widget */}
       <FloatingConsultationWidget />

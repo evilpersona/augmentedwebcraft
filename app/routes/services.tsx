@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import type { Route } from "./../+types/services";
 import { FaCode } from "react-icons/fa";
 import { FaUsersGear } from "react-icons/fa6";
 import { MdMiscellaneousServices } from "react-icons/md";
@@ -19,7 +18,7 @@ const iconMap = {
   GrHostMaintenance,
 };
 
-export const meta: Route.MetaFunction = () => {
+export const meta: any = () => {
   return [
     { title: "Our Services - Augmented Webcraft | Web Development & Consulting" },
     { 
@@ -284,7 +283,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <Footer onServiceClick={() => {}} />
+      <Footer />
       
       {/* Floating Consultation Widget */}
       <FloatingConsultationWidget />

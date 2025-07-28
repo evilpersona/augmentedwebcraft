@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import type { Route } from "./../+types/terms";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 import FloatingConsultationWidget from "~/components/FloatingConsultationWidget";
 
-export const meta: Route.MetaFunction = () => {
+export const meta: any = () => {
   return [
     { title: "Terms of Service - Augmented Webcraft" },
     { 
@@ -216,7 +215,7 @@ export default function TermsPage() {
         </div>
       </section>
 
-      <Footer onServiceClick={() => {}} />
+      <Footer />
       
       {/* Floating Consultation Widget */}
       <FloatingConsultationWidget />

@@ -1,12 +1,15 @@
 {
-  "name": "Augmented Webcraft",
-  "short_name": "AugWeb",
-  "description": "Expert Web Development & Technical Consulting",
+  "name": "Augmented Webcraft - Expert Web Development & Technical Consulting",
+  "short_name": "Augmented Webcraft",
+  "description": "Transform your digital vision into reality with expert web development, custom solutions, and technical consulting services.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#050917",
-  "theme_color": "#3b82f6",
+  "theme_color": "#050917",
+  "lang": "en",
+  "scope": "/",
   "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "development"],
   "icons": [
     {
       "src": "/icon.svg",
@@ -25,7 +28,37 @@
       "type": "image/svg+xml"
     }
   ],
-  "categories": ["business", "productivity", "utilities"],
-  "lang": "en-US",
+  "shortcuts": [
+    {
+      "name": "Services",
+      "short_name": "Services",
+      "description": "View our web development services",
+      "url": "/services",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Blog",
+      "short_name": "Blog",
+      "description": "Read our latest articles and tutorials",
+      "url": "/blog",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Projects",
+      "short_name": "Projects",
+      "description": "Explore our portfolio of work",
+      "url": "/projects",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch with us",
+      "url": "/contact",
+      "icons": [{ "src": "/icon.svg", "sizes": "96x96", "type": "image/svg+xml" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
   "dir": "ltr"
 }

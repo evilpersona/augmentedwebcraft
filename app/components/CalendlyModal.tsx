@@ -103,9 +103,8 @@ const CalendlyModal: React.FC<CalendlyModalProps> = ({
             <InlineWidget 
               url={calendlyUrl}
               styles={{
-                height: '100%',
-                width: '100%',
-                minHeight: '500px'
+                height: '500px',
+                width: '100%'
               }}
               pageSettings={{
                 backgroundColor: 'ffffff',

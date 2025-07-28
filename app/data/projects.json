@@ -1,0 +1,110 @@
+[
+  {
+    "slug": "graphic-design-portfolio",
+    "title": "Graphic Designer Portfolio",
+    "date": "2025-07-25",
+    "client": "Christopher Silva",
+    "category": "Portfolio",
+    "technologies": ["Sveltekit", "TypeScript", "Prismic.io", "Netlify", "Tailwind CSS"],
+    "featured": true,
+    "status": "completed",
+    "image": "/images/projects/csilva-header.png",
+    "gallery": [
+      "/images/projects/csilva-header.png",
+      "/images/projects/csilva-projects.png",
+      "/images/projects/csilva-project.png"
+    ],
+    "liveUrl": "https://csilva23.com",
+    "githubUrl": "",
+    "overview": "Christopher Silva needed a complete redesign of their graphic design portfolio to improve performance, user experience, and administrative capabilities. We delivered a modern, scalable solution.",
+    "sections": [
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Project Overview"
+      },
+      {
+        "type": "paragraph",
+        "content": "Christopher Silva needed a complete redesign of their graphic design portfolio to improve performance, user experience, and administrative capabilities. We delivered a modern, scalable solution."
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Key Features"
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "content": "Customer Experience"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Lightning-fast performance with SvelteKit",
+          "Responsive design that works seamlessly across all devices"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 3,
+        "content": "Technical Highlights"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Type-safe development with TypeScript throughout",
+          "Automated testing with Jest and Playwright",
+          "CI/CD pipeline with automated deployments"
+        ]
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Architecture"
+      },
+      {
+        "type": "paragraph",
+        "content": "The platform follows a modern, microservices-inspired architecture:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Frontend: SvelteKit with TypeScript and Tailwind CSS",
+          "Backend: Svelte with Prismic.io CMS",
+          "Content Management: Prismic.Io",
+          "Hosting: Netlify"
+        ]
+      },
+      {
+        "type": "results",
+        "title": "Results",
+        "items": [
+          "40% increase in conversion rate",
+          "60% faster page load times",
+          "50% reduction in bounce rate",
+          "99.9% uptime since launch",
+          "500% increase in mobile traffic"
+        ]
+      },
+      {
+        "type": "testimonial",
+        "content": "Augmented Webcraft transformed my online presence completely. The new platform not only looks amazing but has significantly improved our sales and customer satisfaction. The team's attention to detail and technical expertise is outstanding.",
+        "author": "Christopher Silva"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "content": "Technologies Used"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Frontend: SvelteKit, TypeScript, Tailwind CSS",
+          "Backend: Svelte, Prismic",
+          "Deployment: Netlify",
+          "Testing: Jest, Playwright, Cypress"
+        ]
+      }
+    ]
+  }
+]

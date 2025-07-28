@@ -194,44 +194,22 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage = 'home' }) => {
 
           {/* Menu Items with staggered animations */}
           <nav className="flex flex-col items-center space-y-8 text-center" role="navigation" aria-label="Main menu">
-            <a
-              ref={firstMenuItemRef}
-              href="/"
-              onClick={closeMenu}
-              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group block focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded ${
-                isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              } ${currentPage === 'home' ? 'text-blue-300' : ''}`}
-              style={{ transitionDelay: isMenuOpen ? '200ms' : '0ms' }}
-              aria-current={currentPage === 'home' ? 'page' : undefined}
-            >
-              <span className="relative z-10">Home</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-violet-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"></div>
-            </a>
-            <a
-              href="/services"
-              onClick={closeMenu}
-              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group block focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded ${
-                isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              } ${currentPage === 'services' ? 'text-blue-300' : ''}`}
-              style={{ transitionDelay: isMenuOpen ? '400ms' : '0ms' }}
-              aria-current={currentPage === 'services' ? 'page' : undefined}
-            >
-              <span className="relative z-10">Services</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-violet-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"></div>
-            </a>
-            <a
-              ref={lastMenuItemRef}
-              href="/contact"
-              onClick={closeMenu}
-              className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group block focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded ${
-                isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-              } ${currentPage === 'contact' ? 'text-blue-300' : ''}`}
-              style={{ transitionDelay: isMenuOpen ? '600ms' : '0ms' }}
-              aria-current={currentPage === 'contact' ? 'page' : undefined}
-            >
-              <span className="relative z-10">Contact</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-violet-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"></div>
-            </a>
+            {navItems.map((item, index) => (
+              <a
+                key={item.label}
+                ref={index === 0 ? firstMenuItemRef : index === navItems.length - 1 ? lastMenuItemRef : undefined}
+                href={item.href}
+                onClick={closeMenu}
+                className={`text-white text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wider hover:text-blue-300 transition-all duration-500 cursor-pointer transform hover:scale-110 hover:translate-x-4 relative group block focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded ${
+                  isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                } ${item.isActive ? 'text-blue-300' : ''}`}
+                style={{ transitionDelay: isMenuOpen ? `${200 + (index * 200)}ms` : '0ms' }}
+                aria-current={item.isActive ? 'page' : undefined}
+              >
+                <span className="relative z-10">{item.label}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-violet-600/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100"></div>
+              </a>
+            ))}
           </nav>
           
           {/* Company Logo in Menu - Bottom with animation (like homepage) */}

@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
-import type { Route } from "./../+types/404";
 import { IconLogo } from "../components/Logo";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 
-export const meta: Route.MetaFunction = () => {
+export const meta: any = () => {
   return [
     { title: "Page Not Found - Augmented Webcraft" },
     { 
